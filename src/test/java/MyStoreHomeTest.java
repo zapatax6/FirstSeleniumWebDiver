@@ -15,6 +15,9 @@ public class MyStoreHomeTest extends BaseTest{
     final String logoCSSLocatorFalse ="div.header_logo";
     final String carritoLocator = "div.shopping_cart > a";
     final String searchBoxLocator = "div > form#searchbox";
+    final String searchTextBoxIdLocator = "search_query_top";
+    final String btnSearchButtonCSSLocator = "form#searchbox > button";
+    //final String alertSearchResultCSSLocator = "div#"
     //private WebDriver _childWebDriver = webDriver;
 
     @Test
@@ -79,6 +82,28 @@ public class MyStoreHomeTest extends BaseTest{
         WebElement searchBox = _childWebDriver.findElement(By.cssSelector(searchBoxLocator));
         Assert.assertTrue(searchBox.isDisplayed());
 
+
+    }
+
+    @Test
+    public void testSendTextToSearchTextBox(){
+        openMyStore();
+        WebElement searchTextBox = _childWebDriver.findElement(By.id(searchTextBoxIdLocator));
+        WebElement buttonSearch = _childWebDriver.findElement(By.cssSelector(btnSearchButtonCSSLocator));
+
+        //Variables que se van a usar en la prueba
+       //searchTextBox.sendKeys("Women");
+        String textToSearch = "women";
+
+       //Acciones o pasos de prueba
+        //openMyStore();
+        searchTextBox.sendKeys(textToSearch);
+        buttonSearch.click();
+
+        SearchResultPage resultsPage = new SearchResultPage(_childWebDriver);
+        Boolean resultsDisplayed = resultsPage.verifySearchResults();
+
+        System.out.println("Results displayed : " + resultsDisplayed);
 
     }
         private void openMyStore () {
